@@ -8,6 +8,7 @@ import {
 import { UserDocument } from 'src/domain/schemas/user.schema';
 import { UserService } from 'src/services/user.service';
 import { AuthenticationRequest } from '../requests/authentication-request';
+import { AuthenticationResponse } from '../responses/authentication-response';
 
 @Controller('users')
 export class UserController {
@@ -15,7 +16,9 @@ export class UserController {
 
   @Post('auth/login')
   @UseInterceptors(NotFoundException)
-  async authenticate(@Body() body: AuthenticationRequest) {
+  async authenticate(
+    @Body() body: AuthenticationRequest,
+  ): Promise<AuthenticationResponse> {
     const user = await this.userService.findUserByUsernameAndPassword(body);
     const token = await this.userService.createUserToken(user as UserDocument);
     return { token };

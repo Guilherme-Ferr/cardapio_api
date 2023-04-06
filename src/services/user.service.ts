@@ -25,7 +25,7 @@ export class UserService {
         username: user.username,
       };
     } catch (error) {
-      throw new NotFoundException(error.message);
+      throw new Error(error.message);
     }
   }
 
