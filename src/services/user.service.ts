@@ -16,7 +16,7 @@ export class UserService {
     password,
   }: AuthenticationRequest): Promise<User> {
     try {
-      const user = await this.userModel.findOne({ username }).exec();
+      const user = await this.userModel.findOne({ username });
       if (!user) throw new NotFoundException('User not found!');
       const verifyPassword = await compare(password, user.pass);
       if (!verifyPassword) throw new NotFoundException('User not found!');

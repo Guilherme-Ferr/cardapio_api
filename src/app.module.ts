@@ -9,6 +9,7 @@ import { CategoryService } from './services/category.service';
 import { UserService } from './services/user.service';
 import { ProductController } from './presentation/controllers/product.controller';
 import { ProductService } from './services/product.service';
+import { Product, ProductSchema } from './domain/schemas/product.schema';
 
 @Module({
   imports: [
@@ -21,6 +22,10 @@ import { ProductService } from './services/product.service';
       {
         name: Category.name,
         schema: CategorySchema,
+      },
+      {
+        name: Product.name,
+        schema: ProductSchema,
       },
     ]),
   ],
