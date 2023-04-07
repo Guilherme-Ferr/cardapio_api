@@ -10,3 +10,11 @@ export async function validateUserIsAdmin(token: string): Promise<void> {
     throw new UnauthorizedException('User unauthorized!');
   }
 }
+
+export async function validateTokenParams(token: string): Promise<void> {
+  if (!token) throw new NotFoundException('Token not provided!');
+  const verifyedToken = verify(token, TOKEN_SECRET);
+  if (!verifyedToken) {
+    throw new UnauthorizedException('User unauthorized!');
+  }
+}

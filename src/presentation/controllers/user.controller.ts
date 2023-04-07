@@ -10,7 +10,7 @@ import { UserService } from 'src/services/user.service';
 import { AuthenticationRequest } from '../requests/authentication-request';
 import { AuthenticationResponse } from '../responses/authentication-response';
 
-@Controller('users')
+@Controller()
 export class UserController {
   constructor(private userService: UserService) {}
 

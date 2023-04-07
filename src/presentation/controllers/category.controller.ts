@@ -3,7 +3,7 @@ import { Category } from 'src/domain/schemas/category.schema';
 import { CategoryService } from 'src/services/category.service';
 import { validateUserIsAdmin } from 'src/utils/validate-user-token';
 
-@Controller('categories')
+@Controller('category')
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
