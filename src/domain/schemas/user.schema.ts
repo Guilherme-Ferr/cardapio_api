@@ -12,6 +12,9 @@ export class User {
 
   @Prop({ name: 'pass' })
   pass?: string;
+
+  @Prop({ required: true })
+  role: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

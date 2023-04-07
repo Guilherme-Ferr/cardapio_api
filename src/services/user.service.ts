@@ -23,6 +23,7 @@ export class UserService {
       return {
         id: user._id,
         username: user.username,
+        role: user.role,
       };
     } catch (error) {
       throw new Error(error.message);
