@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DB_URI } from './configs/constants';
 import { Category, CategorySchema } from './domain/schemas/category.schema';
 import { User, UserSchema } from './domain/schemas/user.schema';
 import { CategoryController } from './presentation/controllers/category.controller';
@@ -13,7 +12,9 @@ import { Product, ProductSchema } from './domain/schemas/product.schema';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(DB_URI),
+    MongooseModule.forRoot(
+      'mongodb+srv://admin:adminpass@trading.88pavwg.mongodb.net/menu',
+    ),
     MongooseModule.forFeature([
       {
         name: User.name,

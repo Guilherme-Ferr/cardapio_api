@@ -4,7 +4,6 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../domain/schemas/user.schema';
-import { TOKEN_SECRET } from '../configs/constants';
 import { AuthenticationRequest } from '../presentation/requests/authentication-request';
 
 @Injectable()
@@ -32,7 +31,7 @@ export class UserService {
 
   async createUserToken(user: User): Promise<string> {
     try {
-      const token = sign({ user }, TOKEN_SECRET, {
+      const token = sign({ user }, '13a0c5d912d49ac040139134b2da6a86', {
         subject: String(user.id),
         expiresIn: '30h',
       });
