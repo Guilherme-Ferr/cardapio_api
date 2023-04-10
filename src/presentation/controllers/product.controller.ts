@@ -1,7 +1,9 @@
-import { Controller, Get, Headers, Param } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Param, Post } from '@nestjs/common';
 import { Product } from 'src/domain/schemas/product.schema';
 import { ProductService } from 'src/services/product.service';
+import { validateUserIsAdmin } from 'src/utils/validate-user-token';
 import { validateTokenParams } from 'src/utils/validate-user-token';
+import { CreateProductRequest } from '../requests/authentication-request copy';
 
 @Controller('product')
 export class ProductController {
@@ -24,5 +26,15 @@ export class ProductController {
     await validateTokenParams(token);
     const product = await this.productService.findOne(id);
     return { product };
+  }
+
+  @Post()
+  async create(
+    @Headers('token') token: string,
+    @Body() data: CreateProductRequest,
+  ): Promise<{ newProduct: Product }> {
+    await validateUserIsAdmin(token);
+    const newProduct = await this.productService.create(data);
+    return { newProduct };
   }
 }
