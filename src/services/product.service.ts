@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Product, ProductDocument } from 'src/domain/schemas/product.schema';
-import { CreateProductRequest } from 'src/presentation/requests/authentication-request copy';
+import { CreateUpdateProductRequest } from 'src/presentation/requests/create-update-product-request';
 
 @Injectable()
 export class ProductService {
@@ -24,12 +24,27 @@ export class ProductService {
     return product;
   }
 
-  async create(data: CreateProductRequest): Promise<Product> {
+  async create(data: CreateUpdateProductRequest): Promise<Product> {
     const productExists = await this.productModel.findOne({ name: data?.name });
     if (productExists) throw new ConflictException('Product already exists!');
     else {
       const newProduct = await this.productModel.create(data);
       return newProduct;
+    }
+  }
+
+  async update(
+    productId: string,
+    productData: CreateUpdateProductRequest,
+  ): Promise<Product> {
+    const productExists = await this.productModel.findOne({ _id: productId });
+    if (!productExists) throw new NotFoundException('Product not found!');
+    else {
+      const updateProduct = await this.productModel.updateOne(
+        { _id: productId },
+        { $set: productData },
+      );
+      if (updateProduct?.acknowledged == true) return productData as Product;
     }
   }
 }

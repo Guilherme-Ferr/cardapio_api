@@ -1,6 +1,6 @@
 import { IsNotEmpty, Length } from 'class-validator';
 
-export class CreateProductRequest {
+export class CreateUpdateProductRequest {
   @IsNotEmpty({
     message: 'The name should not be empty',
   })

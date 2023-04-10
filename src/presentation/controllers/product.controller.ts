@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Headers, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Headers,
+  Param,
+  Post,
+  Patch,
+} from '@nestjs/common';
 import { Product } from 'src/domain/schemas/product.schema';
 import { ProductService } from 'src/services/product.service';
 import { validateUserIsAdmin } from 'src/utils/validate-user-token';
 import { validateTokenParams } from 'src/utils/validate-user-token';
-import { CreateProductRequest } from '../requests/authentication-request copy';
+import { CreateUpdateProductRequest } from '../requests/create-update-product-request';
 
 @Controller('product')
 export class ProductController {
@@ -31,10 +39,21 @@ export class ProductController {
   @Post()
   async create(
     @Headers('token') token: string,
-    @Body() data: CreateProductRequest,
+    @Body() data: CreateUpdateProductRequest,
   ): Promise<{ newProduct: Product }> {
     await validateUserIsAdmin(token);
     const newProduct = await this.productService.create(data);
     return { newProduct };
+  }
+
+  @Patch('/:id')
+  async update(
+    @Param('id') id: string,
+    @Headers('token') token: string,
+    @Body() requestBody: CreateUpdateProductRequest,
+  ): Promise<{ updatedProduct: Product }> {
+    await validateUserIsAdmin(token);
+    const updatedProduct = await this.productService.update(id, requestBody);
+    return { updatedProduct };
   }
 }
