@@ -4,6 +4,17 @@
 $ npm install
 ```
 
+## Tecnologias usadas
+
+```
+Typescript,
+NodeJS,
+NestJS,
+JWT,
+BcryptJS,
+Mongoose,
+```
+
 ## Rodando o servidor
 
 ```bash
