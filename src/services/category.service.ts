@@ -16,4 +16,20 @@ export class CategoryService {
       throw new Error(error.message);
     }
   }
+
+  async listById(categoriesIds: string[]): Promise<string[]> {
+    try {
+      const categoriesList = Promise.all(
+        categoriesIds.map(async (categoryId) => {
+          const { name } = await this.categoryModel.findOne({
+            _id: categoryId,
+          });
+          return name;
+        }),
+      );
+      return await categoriesList;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }

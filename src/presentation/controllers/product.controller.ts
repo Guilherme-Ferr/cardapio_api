@@ -1,23 +1,32 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Headers,
-  Param,
-  Post,
-  Patch,
-  Delete,
   HttpCode,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { Product } from 'src/domain/schemas/product.schema';
+import {
+  Product,
+  ProductWithCategories,
+} from 'src/domain/schemas/product.schema';
+import { CategoryService } from 'src/services/category.service';
 import { ProductService } from 'src/services/product.service';
-import { validateUserIsAdmin } from 'src/utils/validate-user-token';
-import { validateTokenParams } from 'src/utils/validate-user-token';
+import {
+  validateTokenParams,
+  validateUserIsAdmin,
+} from 'src/utils/validate-user-token';
 import { CreateUpdateProductRequest } from '../requests/create-update-product-request';
 
 @Controller('product')
 export class ProductController {
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private categoryService: CategoryService,
+  ) {}
 
   @Get()
   @HttpCode(200)
@@ -34,10 +43,21 @@ export class ProductController {
   async findOne(
     @Param('id') id: string,
     @Headers('token') token: string,
-  ): Promise<{ product: Product }> {
+  ): Promise<{ product: ProductWithCategories }> {
     await validateTokenParams(token);
-    const product = await this.productService.findOne(id);
-    return { product };
+    const productFound = await this.productService.findOne(id);
+    const categories = await this.categoryService.listById(
+      productFound?.categoriesIds,
+    );
+    return {
+      product: {
+        _id: productFound?.id,
+        name: productFound?.name,
+        qty: productFound?.qty,
+        price: productFound?.price,
+        categories,
+      },
+    };
   }
 
   @Post()

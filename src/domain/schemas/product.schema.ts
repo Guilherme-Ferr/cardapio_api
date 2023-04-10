@@ -21,3 +21,11 @@ export class Product {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
+
+export interface ProductWithCategories {
+  _id: string;
+  name: string;
+  qty: number;
+  price: number;
+  categories: string[];
+}
