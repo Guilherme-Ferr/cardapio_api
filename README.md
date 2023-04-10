@@ -29,7 +29,7 @@ $ npm run start:dev
 
 ### `Metodo:` POST
 
-### `End Point:` auth/login
+### `End Point:` http://localhost:3000/auth/login
 
 ### `Body:`
 
@@ -51,7 +51,7 @@ $ npm run start:dev
 
 ### `Metodo:` GET
 
-### `End Point:` category
+### `End Point:` http://localhost:3000/category
 
 ### `Header:` token: `string`
 
@@ -77,7 +77,7 @@ $ npm run start:dev
 
 ### `Metodo:` GET
 
-### `End Point:` product
+### `End Point:` http://localhost:3000/product
 
 ### `Header:` token: `string`
 
@@ -115,7 +115,7 @@ $ npm run start:dev
 
 ### `Metodo:` GET
 
-### `End Point:` product/<id_do_produto>
+### `End Point:` http://localhost:3000/product/<id_do_produto>
 
 ### `Header:` token: `string`
 
@@ -141,7 +141,7 @@ $ npm run start:dev
 
 ### `Metodo:` POST
 
-### `End Point:` product
+### `End Point:` http://localhost:3000/product
 
 ### `Header:` token: `string`
 
@@ -169,7 +169,7 @@ $ npm run start:dev
 
 ### `Metodo:` PATCH
 
-### `End Point:` product/<id_do_produto>
+### `End Point:` http://localhost:3000/product/<id_do_produto>
 
 ### `Header:` token: `string`
 
@@ -201,7 +201,7 @@ $ npm run start:dev
 
 ### `Metodo:` DELETE
 
-### `End Point:` product/<id_do_produto>
+### `End Point:` http://localhost:3000/product/<id_do_produto>
 
 ### `Header:` token: `string`
 
