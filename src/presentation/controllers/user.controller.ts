@@ -4,6 +4,7 @@ import {
   Post,
   UseInterceptors,
   NotFoundException,
+  HttpCode,
 } from '@nestjs/common';
 import { UserDocument } from 'src/domain/schemas/user.schema';
 import { UserService } from 'src/services/user.service';
@@ -15,6 +16,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('auth/login')
+  @HttpCode(200)
   @UseInterceptors(NotFoundException)
   async authenticate(
     @Body() body: AuthenticationRequest,

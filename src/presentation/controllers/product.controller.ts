@@ -6,6 +6,8 @@ import {
   Param,
   Post,
   Patch,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { Product } from 'src/domain/schemas/product.schema';
 import { ProductService } from 'src/services/product.service';
@@ -18,6 +20,7 @@ export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get()
+  @HttpCode(200)
   async listAll(
     @Headers('token') token: string,
   ): Promise<{ products: Product[] }> {
@@ -27,6 +30,7 @@ export class ProductController {
   }
 
   @Get('/:id')
+  @HttpCode(200)
   async findOne(
     @Param('id') id: string,
     @Headers('token') token: string,
@@ -37,6 +41,7 @@ export class ProductController {
   }
 
   @Post()
+  @HttpCode(201)
   async create(
     @Headers('token') token: string,
     @Body() data: CreateUpdateProductRequest,
@@ -47,13 +52,23 @@ export class ProductController {
   }
 
   @Patch('/:id')
+  @HttpCode(200)
   async update(
     @Param('id') id: string,
     @Headers('token') token: string,
     @Body() requestBody: CreateUpdateProductRequest,
-  ): Promise<{ updatedProduct: Product }> {
+  ): Promise<void> {
     await validateUserIsAdmin(token);
-    const updatedProduct = await this.productService.update(id, requestBody);
-    return { updatedProduct };
+    await this.productService.update(id, requestBody);
+  }
+
+  @Delete('/:id')
+  @HttpCode(204)
+  async delete(
+    @Param('id') id: string,
+    @Headers('token') token: string,
+  ): Promise<void> {
+    await validateUserIsAdmin(token);
+    await this.productService.delete(id);
   }
 }

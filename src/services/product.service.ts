@@ -36,15 +36,22 @@ export class ProductService {
   async update(
     productId: string,
     productData: CreateUpdateProductRequest,
-  ): Promise<Product> {
+  ): Promise<void> {
     const productExists = await this.productModel.findOne({ _id: productId });
     if (!productExists) throw new NotFoundException('Product not found!');
     else {
-      const updateProduct = await this.productModel.updateOne(
+      await this.productModel.updateOne(
         { _id: productId },
         { $set: productData },
       );
-      if (updateProduct?.acknowledged == true) return productData as Product;
+    }
+  }
+
+  async delete(productId: string): Promise<void> {
+    const productExists = await this.productModel.findOne({ _id: productId });
+    if (!productExists) throw new NotFoundException('Product not found!');
+    else {
+      await this.productModel.deleteOne({ _id: productId });
     }
   }
 }
